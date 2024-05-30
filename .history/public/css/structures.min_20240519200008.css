@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+@media (max-width: 991.98px) { /* Responsive từ tablet trở xuống */
+  .navbar-collapse {
+      display: flex;
+      align-items: center; /* Căn giữa theo chiều dọc */
+  }
+
+  .img-avatar {
+      margin-right: 10px; /* Đặt margin giữa avatar và nút toggle */
+  }
+}

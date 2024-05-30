@@ -1,0 +1,1 @@
+SQLSTATE[HY000]: General error: 1364 Field 'id_dich_vu' doesn't have a default value
