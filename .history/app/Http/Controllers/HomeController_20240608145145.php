@@ -51,7 +51,7 @@ class HomeController extends Controller
             }
             return view('member', ['phong_id' => $phongId, 'data' => $data, 'idKhachThue' => $idKhachThue]);
         } else {
-            return view('frontlogin');
+            return view('myroom');
         }
     }
     
@@ -72,6 +72,7 @@ class HomeController extends Controller
                 } else {
                     $chiTietHoaDon = collect();
                 }
+
                 return view('myroom', ['phongTro' => $phongTro, 'hopDong' => $hopDong, 'hoaDon' => $hoaDon, 'chiTietHoaDon' => $chiTietHoaDon,'khachThue' => $khachThue,'thanhVien' => $thanhVien]);
             } else {
                 return view('myroom', ['phongTro' => $phongTro,'khachThue' => $khachThue]);
@@ -80,6 +81,7 @@ class HomeController extends Controller
             return view('myroom')->with(['showContent' => false, 'error' => 'Bạn cần đăng nhập để xem phòng của mình.']);
         }
     }
+    
 
     // Home Page
     public function aboutus() {

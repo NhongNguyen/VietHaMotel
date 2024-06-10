@@ -44,6 +44,7 @@ class HomeController extends Controller
         $data = PhongTros::findOrFail($phongId);
     
         if (session()->has('khachthuelogin')) {
+            // Ensure $khachthue is an array before accessing its elements
             if (is_array($khachthue) && array_key_exists('id', $khachthue)) {
                 $idKhachThue = $khachthue['id'];
             } else {
@@ -51,35 +52,49 @@ class HomeController extends Controller
             }
             return view('member', ['phong_id' => $phongId, 'data' => $data, 'idKhachThue' => $idKhachThue]);
         } else {
-            return view('frontlogin');
+            return view('myroom');
         }
     }
     
     public function myroom() {
+        // Kiểm tra xem người dùng đã đăng nhập và có thông tin về phòng trọ hay không
         if (session()->has('khachthuelogin')) {
+            // Lấy id của khách thuê đang đăng nhập
             $idKhachThue = session('khachthuelogin')->id;
-            $khachThue = KhachThues::where('id', $idKhachThue)->first();
+            $khachThue = KhachThues::where('id', $idKhachThue)->first();            // Tìm thông tin phòng trọ của khách thuê dựa trên idKhachThue
             $phongTro = PhongTros::where('id_khach_thue', $idKhachThue)->first();
-            if ($phongTro) {
-                $idPhongTro = $phongTro->id;
             
+            // Kiểm tra xem có thông tin phòng trọ cho khách thuê này hay không
+            if ($phongTro) {
+                // Lấy id phòng trọ
+                $idPhongTro = $phongTro->id;
+                
+                // Tìm thông tin hợp đồng dựa trên id phòng trọ
                 $hopDong = HopDongs::where('id_phong_tro', $idPhongTro)->first();
+
                 $thanhVien = ThanhViens::find($phongTro->id_thanh_vien);                
+                // Tìm thông tin hóa đơn dựa trên id phòng trọ
                 $hoaDon = HoaDons::where('id_phong_tro', $idPhongTro)->first();
                 
+                // Nếu có hóa đơn, lấy thông tin chi tiết hóa đơn
                 if ($hoaDon) {
                     $chiTietHoaDon = ChiTietHoaDons::where('id_hoa_don', $hoaDon->id)->get(); // Sử dụng get() để lấy danh sách các chi tiết hóa đơn
                 } else {
-                    $chiTietHoaDon = collect();
+                    $chiTietHoaDon = collect(); // Tạo một tập hợp rỗng nếu không có hóa đơn
                 }
+                
+                // Nếu có, trả về view với thông tin phòng trọ, hợp đồng, hóa đơn và chi tiết hóa đơn
                 return view('myroom', ['phongTro' => $phongTro, 'hopDong' => $hopDong, 'hoaDon' => $hoaDon, 'chiTietHoaDon' => $chiTietHoaDon,'khachThue' => $khachThue,'thanhVien' => $thanhVien]);
             } else {
+                // Nếu không có thông tin phòng trọ, có thể hiển thị thông báo hoặc chuyển hướng người dùng đến trang khác
                 return view('myroom', ['phongTro' => $phongTro,'khachThue' => $khachThue]);
             }
         } else {
+            // Nếu người dùng chưa đăng nhập, chuyển hướng họ đến trang đăng nhập
             return view('myroom')->with(['showContent' => false, 'error' => 'Bạn cần đăng nhập để xem phòng của mình.']);
         }
     }
+    
 
     // Home Page
     public function aboutus() {

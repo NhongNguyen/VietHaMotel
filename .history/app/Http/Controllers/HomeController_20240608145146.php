@@ -51,7 +51,7 @@ class HomeController extends Controller
             }
             return view('member', ['phong_id' => $phongId, 'data' => $data, 'idKhachThue' => $idKhachThue]);
         } else {
-            return view('frontlogin');
+            return view('myroom');
         }
     }
     
@@ -80,6 +80,7 @@ class HomeController extends Controller
             return view('myroom')->with(['showContent' => false, 'error' => 'Bạn cần đăng nhập để xem phòng của mình.']);
         }
     }
+    
 
     // Home Page
     public function aboutus() {

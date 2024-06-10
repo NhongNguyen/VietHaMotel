@@ -4,7 +4,7 @@
 <section class="home">
     <div class="home-img">
         <div class="img-container fade-out">
-            <img class="full-width-img" alt="house" src="{{ asset('img/home-img.jpg')}}">
+            <img class="full-width-img" alt="house" src="/public/">
             <div class="overlay"></div>
             <div class="home-img-text">VIỆT HÀ</div> 
         </div>

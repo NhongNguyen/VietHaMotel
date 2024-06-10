@@ -51,7 +51,7 @@ class HomeController extends Controller
             }
             return view('member', ['phong_id' => $phongId, 'data' => $data, 'idKhachThue' => $idKhachThue]);
         } else {
-            return view('frontlogin');
+            return view('myroom');
         }
     }
     
